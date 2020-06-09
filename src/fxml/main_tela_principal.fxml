@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller_tela_principal">
+   <children>
+      <HBox alignment="CENTER" layoutX="186.0" layoutY="272.0" prefHeight="110.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <ImageView fitHeight="67.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@microsoft-logo-new.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutY="6.0" prefHeight="125.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <MenuBar styleClass="menu-bar" fx:id="barraDeMenu">
+              <menus>
+                <Menu styleClass="menu" fx:id="menuArquivo" mnemonicParsing="false" text="Arquivo">
+                  <items>
+                    <MenuItem fx:id="itemContato" mnemonicParsing="false" onAction="#acessar_contato" text="Contato">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
+                        <MenuItem fx:id="itemTipoContato" mnemonicParsing="false" onAction="#acessarTipoContato" text="Tipo de Contato" />
+                        <MenuItem fx:id="itemCidade" mnemonicParsing="false" onAction="#acessarCidade" text="Cidade" />
+                        <MenuItem fx:id="itemUsers" mnemonicParsing="false" onAction="#acessarUsers" text="Usuários" />
+                        <MenuItem fx:id="itemExit" mnemonicParsing="false" onAction="#sair_metodo" text="Sair" />
+                  </items>
+                </Menu>
+                <Menu fx:id="menuRelatorios" mnemonicParsing="false" text="Relatorios">
+                  <items>
+                    <MenuItem fx:id="item_contatosGeral" mnemonicParsing="false" onAction="#rel_contatosGeral" text="Contatos Geral" />
+                        <MenuItem fx:id="item_contatosTel" mnemonicParsing="false" onAction="#rel_contatosTel" text="Contatos Telefone" />
+                        <MenuItem fx:id="item_contatos_tipos" mnemonicParsing="false" onAction="#rel_contatosTipo" text="Contatos Tipo" />
+                        <MenuItem fx:id="item_contatosEndereco" mnemonicParsing="false" onAction="#rel_contatosEndereço" text="Contatos Endereço" />
+                  </items>
+                </Menu>
+                <Menu fx:id="menuSobre" mnemonicParsing="false" text="Sobre">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Empresa" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.form_contatos">
+    <children>
+        <HBox alignment="CENTER" layoutX="188.0" layoutY="14.0" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #00b6b6; -fx-border-color: black;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Label text="Titulo">
+                    <font>
+                        <Font name="Arial Black" size="24.0" />
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+        <AnchorPane layoutX="7.0" layoutY="59.0" prefHeight="155.0" prefWidth="600.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="299.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+            <children>
+            <TextField fx:id="field_born" editable="false" layoutX="408.0" layoutY="35.0" promptText="NASCIMENTO" AnchorPane.rightAnchor="20.0" />
+                <TextField fx:id="txtf_id" disable="true" editable="false" layoutX="39.0" layoutY="35.0" promptText="ID" AnchorPane.leftAnchor="20.0" />
+                <TextField fx:id="field_nome" editable="false" layoutX="39.0" layoutY="74.0" promptText="NOME" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="74.0" />
+            <TextField fx:id="field_address" editable="false" layoutX="39.0" layoutY="107.0" promptText="ENDEREÇO" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="200.0" />
+            <TextField fx:id="field_n" editable="false" layoutX="431.0" layoutY="107.0" promptText="Nº" AnchorPane.rightAnchor="20.0" />
+            <ComboBox fx:id="combo_city" layoutX="39.0" layoutY="145.0" prefHeight="25.0" prefWidth="264.0" promptText="CIDADE" AnchorPane.leftAnchor="20.0" />
+            <TextField fx:id="field_uf" layoutX="316.0" layoutY="145.0" prefHeight="26.0" prefWidth="100.0" promptText="UF" />
+            <TextField fx:id="field_cep" layoutX="431.0" layoutY="145.0" promptText="CEP" AnchorPane.rightAnchor="20.0" />
+            <TextField fx:id="field_tel1" layoutX="39.0" layoutY="183.0" promptText="TEL 1" AnchorPane.leftAnchor="20.0" />
+            <TextField fx:id="field_tel2" layoutX="224.0" layoutY="183.0" promptText="TEL 2" />
+            <ComboBox fx:id="combo_tipoContato" layoutX="428.0" layoutY="184.0" prefWidth="150.0" promptText="TIPO DE CONTATO" AnchorPane.rightAnchor="20.0" />
+            </children></AnchorPane>
+        <AnchorPane layoutX="119.0" layoutY="282.0" prefHeight="301.0" prefWidth="600.0" style="-fx-background-color: #00b6b6; -fx-border-color: black;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="282.0">
+            <children>
+                <HBox alignment="CENTER" layoutX="4.0" layoutY="6.0" prefHeight="56.0" prefWidth="594.0" style="-fx-background-color: whitesmoke;" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="5.0">
+                    <children>
+                        <Button fx:id="btn_new" mnemonicParsing="false" onAction="#method_new" prefHeight="41.0" prefWidth="100.0" text="Novo">
+                            <font>
+                                <Font name="Arial Black" size="12.0" />
+                            </font>
+                            <graphic>
+                                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../icons/addIcon.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button fx:id="btn_save" layoutX="258.0" layoutY="19.0" mnemonicParsing="false" onAction="#method_save" prefHeight="41.0" prefWidth="100.0" text="Salvar">
+                            <font>
+                                <Font name="Arial Black" size="12.0" />
+                            </font>
+                            <graphic>
+                                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../icons/save_icon.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <HBox.margin>
+                                <Insets left="15.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="btn_remove" layoutX="316.0" layoutY="19.0" mnemonicParsing="false" onAction="#method_remove" prefHeight="41.0" prefWidth="100.0" text="Excluir">
+                            <font>
+                                <Font name="Arial Black" size="12.0" />
+                            </font>
+                            <graphic>
+                                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../icons/remove_icon.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <HBox.margin>
+                                <Insets left="15.0" />
+                            </HBox.margin>
+                        </Button>
+                    </children>
+                </HBox>
+                <TextField fx:id="txtf_pesquisar" alignment="CENTER" layoutX="14.0" layoutY="69.0" onAction="#pesquisar" promptText="Pesquisar" style="-fx-background-radius: 50; -fx-background-color: gray;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="65.0" />
+                <TableView fx:id="tableview" layoutX="8.0" layoutY="99.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            </children>
+      </AnchorPane>
+    </children>
+</AnchorPane>
