@@ -36,4 +36,12 @@ public class tipo_contato_dao {
         return lista;
     }
 
+    public void excluir(tipoContato tipocontato){
+        Session session = database.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.delete(tipocontato);
+        session.getTransaction().commit();
+        session.close();
+    }
+
 }

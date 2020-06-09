@@ -17,6 +17,7 @@ public class main_tela_principal extends Application {
         scene.getStylesheets().add("/styles/tela_principal.css");
         primaryStage.setTitle("Minha Agenda");
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
         primaryStage.getIcons().add(new Image("main/agenda.png"));
         primaryStage.show();
     }

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.tipoContatoController">
+<AnchorPane fx:controller="controller.tipoContatoController" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <HBox alignment="CENTER" layoutX="188.0" layoutY="14.0" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #00b6b6; -fx-border-color: black;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -76,7 +76,7 @@
                     </children>
                 </HBox>
                 <TextField fx:id="txtf_pesquisar" alignment="CENTER" layoutX="14.0" layoutY="69.0" onKeyReleased="#filtrar_registro" promptText="Pesquisar" style="-fx-background-radius: 50; -fx-background-color: gray;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="65.0" />
-                <TableView fx:id="tableview" layoutX="8.0" layoutY="99.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                <TableView fx:id="tableview" layoutX="8.0" layoutY="99.0" onKeyPressed="#movertabela" onMouseClicked="#clicarTabela" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
             </children></AnchorPane>
     </children>
 </AnchorPane>

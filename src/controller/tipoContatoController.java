@@ -8,9 +8,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import model.tipoContato;
-
-import java.awt.event.KeyEvent;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -22,12 +22,14 @@ public class tipoContatoController implements Initializable, Cadastro {
     private tipo_contato_dao tipoContatoDao = new tipo_contato_dao();
     private ObservableList<tipoContato> observableList = FXCollections.observableArrayList();
     private List<tipoContato> listaTipos;
+    private tipoContato objetoSelecionado = new tipoContato();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         lbl_titulo.setText("Formulário Tipo de Contato");
         criar_colunas_tabela();
         atualizar_tabela();
+        set_campos_formularios();
     }
 
     @FXML
@@ -56,27 +58,43 @@ public class tipoContatoController implements Initializable, Cadastro {
 
     @FXML
     void method_new(ActionEvent event) {
-        txf_descricao.setEditable(true);
+        limpar_campos_formularios();
     }
 
     @FXML
     void method_remove(ActionEvent event) {
+        tipoContatoDao.excluir(objetoSelecionado);
+        limpar_campos_formularios();
+        atualizar_tabela();
+    }
 
+    @FXML
+    void movertabela(KeyEvent event) {
+    set_campos_formularios();
     }
 
     @FXML
     void method_save(ActionEvent event) {
         tipoContato tipoContatoModel = new tipoContato();
+
+        if (Long.valueOf(objetoSelecionado.getId()) != null){
+                    tipoContatoModel.setId(objetoSelecionado.getId());
+            }
         tipoContatoModel.setDescricao(txf_descricao.getText());
         tipoContatoDao.salvar(tipoContatoModel);
-        txf_descricao.setEditable(false);
         atualizar_tabela();
+        limpar_campos_formularios();
     }
 
     @Override
     public void criar_colunas_tabela() {
         TableColumn<tipoContato, Long> id = new TableColumn<>("ID CONTATO");
+            id.setMinWidth(150);
+            id.setMaxWidth(150);
+
         TableColumn<tipoContato, String> descricao = new TableColumn<>("DESCRIÇÃO");
+
+        tableview.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         tableview.getColumns().addAll(id, descricao);
         id.setCellValueFactory(new PropertyValueFactory("id"));
@@ -97,15 +115,29 @@ public class tipoContatoController implements Initializable, Cadastro {
 
     @Override
     public void set_campos_formularios() {
+        objetoSelecionado = tableview.getItems()
+                .get(tableview.getSelectionModel().getSelectedIndex());
+        txf_descricao.setText(objetoSelecionado.getDescricao());
+        txf_descricao.setEditable(true);
+        txtf_id.setText(String.valueOf(objetoSelecionado.getId()));
+    }
 
+    @FXML
+    void clicarTabela(MouseEvent event) {
+        set_campos_formularios();
     }
 
     @Override
     public void limpar_campos_formularios() {
-
+        objetoSelecionado = null;
+        txtf_id.clear();
+        txf_descricao.clear();
+        txf_descricao.requestFocus();
+        txf_descricao.setEditable(true);
     }
 
-    public void filtrar_registro(javafx.scene.input.KeyEvent keyEvent) {
+    public void filtrar_registro(KeyEvent keyEvent) {
       atualizar_tabela();
     }
+
 }
