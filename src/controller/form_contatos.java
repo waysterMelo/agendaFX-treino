@@ -1,5 +1,6 @@
 package controller;
 
+import dao.combo_box_generic;
 import dao.tipo_contato_dao;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -8,19 +9,23 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import model.cidade;
 import model.tipoContato;
 import util.Uf;
 
 
 public class form_contatos implements Initializable, Cadastro {
 
-    private final tipo_contato_dao dao_contato = new tipo_contato_dao();
+    private final combo_box_generic<tipoContato> daoCombo = new combo_box_generic();
+    private combo_box_generic<cidade> cidadeDao = new combo_box_generic();
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         titulo.setText("Formulário Contato");
         combo_uf.setItems(Uf.gerarUf());
-        combo_tipoContato.setItems(dao_contato.combobox());
+        combo_tipoContato.setItems(daoCombo.combobox("tipoContato"));
+        combo_city.setItems(cidadeDao.combobox("cidade"));
     }
 
     @FXML
@@ -42,7 +47,7 @@ public class form_contatos implements Initializable, Cadastro {
     private TextField field_n;
 
     @FXML
-    private ComboBox<?> combo_city;
+    private ComboBox<cidade> combo_city;
 
     @FXML
     private ComboBox<String> combo_uf;

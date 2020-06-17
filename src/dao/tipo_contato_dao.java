@@ -30,11 +30,13 @@ public class tipo_contato_dao {
         List<tipoContato> lista = new ArrayList<>();
         Session session = database.getSessionFactory().openSession();
         session.beginTransaction();
+
             if (descricao.length() == 0){
                 lista = session.createQuery("from tipoContato ").getResultList();
             }else {
                 lista = session.createQuery("from tipoContato t where t.descricao like " + "'"+descricao+"%'").getResultList();
             }
+
         session.getTransaction().commit();
         session.close();
         return lista;
