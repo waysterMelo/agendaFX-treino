@@ -15,11 +15,11 @@ public class tipoContato implements Serializable {
     @Column(name = "descricao", length = 100, nullable = false)
     private String descricao;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -29,5 +29,10 @@ public class tipoContato implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    @Override
+    public String toString() {
+        return descricao;
     }
 }

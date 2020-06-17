@@ -7,18 +7,16 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import model.cidade;
+import util.Uf;
 
 public class cidade_controller  implements Initializable, Cadastro {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        titulo.setText("Formulário Cidades");
+        combobox_uf.setItems(Uf.gerarUf());
     }
 
     @FXML
@@ -31,7 +29,7 @@ public class cidade_controller  implements Initializable, Cadastro {
     private TextField txf_cep;
 
     @FXML
-    private ComboBox<?> combobox_uf;
+    private ComboBox<String> combobox_uf;
 
     @FXML
     private Button btn_new;
@@ -47,6 +45,10 @@ public class cidade_controller  implements Initializable, Cadastro {
 
     @FXML
     private TableView<?> tableview;
+
+    @FXML
+    private Label titulo;
+
 
     @FXML
     void method_new(ActionEvent event) {

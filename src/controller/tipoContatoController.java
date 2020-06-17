@@ -11,6 +11,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import model.tipoContato;
+import util.Alerta;
+
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -63,9 +65,12 @@ public class tipoContatoController implements Initializable, Cadastro {
 
     @FXML
     void method_remove(ActionEvent event) {
-        tipoContatoDao.excluir(objetoSelecionado);
-        limpar_campos_formularios();
-        atualizar_tabela();
+        if (Alerta.msgExclusao(txf_descricao.getText())) {
+            tipoContatoDao.excluir(objetoSelecionado);
+            limpar_campos_formularios();
+            atualizar_tabela();
+        }
+        Alerta.msgInfo("Registro Removido com sucesso");
     }
 
     @FXML
@@ -77,13 +82,20 @@ public class tipoContatoController implements Initializable, Cadastro {
     void method_save(ActionEvent event) {
         tipoContato tipoContatoModel = new tipoContato();
 
-        if (Long.valueOf(objetoSelecionado.getId()) != null){
-                    tipoContatoModel.setId(objetoSelecionado.getId());
-            }
+        if (objetoSelecionado != null){
+            tipoContatoModel.setId(objetoSelecionado.getId());
+        }
         tipoContatoModel.setDescricao(txf_descricao.getText());
-        tipoContatoDao.salvar(tipoContatoModel);
-        atualizar_tabela();
-        limpar_campos_formularios();
+
+            if (tipoContatoDao.salvar(tipoContatoModel)){
+                Alerta.msgInfo("Registro Inserido com sucesso");
+            }else {
+                Alerta.msgInfo("Erro ao inserir registro");
+        }
+
+            atualizar_tabela();
+            limpar_campos_formularios();
+
     }
 
     @Override
@@ -106,19 +118,18 @@ public class tipoContatoController implements Initializable, Cadastro {
     public void atualizar_tabela() {
         observableList.clear();
         listaTipos = tipoContatoDao.consulta(txtf_pesquisar.getText());
-        for (tipoContato t : listaTipos){
-            observableList.add(t);
-        }
+        observableList.addAll(listaTipos);
         tableview.getItems().setAll(observableList);
         tableview.getSelectionModel().selectFirst();
+
     }
 
     @Override
     public void set_campos_formularios() {
-        objetoSelecionado = tableview.getItems()
-                .get(tableview.getSelectionModel().getSelectedIndex());
+       objetoSelecionado = tableview.getItems().get(tableview.getSelectionModel().getSelectedIndex());
         txf_descricao.setText(objetoSelecionado.getDescricao());
         txf_descricao.setEditable(true);
+
         txtf_id.setText(String.valueOf(objetoSelecionado.getId()));
     }
 
