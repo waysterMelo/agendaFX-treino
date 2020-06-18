@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -25,7 +26,6 @@
         </HBox>
         <AnchorPane layoutX="7.0" layoutY="59.0" prefHeight="155.0" prefWidth="600.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="299.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
             <children>
-            <TextField fx:id="field_born" editable="false" layoutX="408.0" layoutY="35.0" promptText="NASCIMENTO" AnchorPane.rightAnchor="20.0" />
                 <TextField fx:id="txtf_id" disable="true" editable="false" layoutX="39.0" layoutY="35.0" promptText="ID" AnchorPane.leftAnchor="20.0" />
                 <TextField fx:id="field_nome" editable="false" layoutX="39.0" layoutY="74.0" promptText="NOME" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="74.0" />
             <TextField fx:id="field_address" editable="false" layoutX="39.0" layoutY="107.0" promptText="ENDEREÇO" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="200.0" />
@@ -36,6 +36,7 @@
             <TextField fx:id="field_tel2" layoutX="224.0" layoutY="183.0" promptText="TEL 2" />
             <ComboBox fx:id="combo_tipoContato" layoutX="428.0" layoutY="184.0" prefWidth="150.0" promptText="TIPO DE CONTATO" AnchorPane.rightAnchor="20.0" />
             <ComboBox fx:id="combo_uf" layoutX="324.0" layoutY="146.0" prefHeight="28.0" prefWidth="76.0" />
+            <DatePicker fx:id="field_born" layoutX="393.0" layoutY="35.0" />
             </children></AnchorPane>
         <AnchorPane layoutX="119.0" layoutY="282.0" prefHeight="301.0" prefWidth="600.0" style="-fx-background-color: #00b6b6; -fx-border-color: black;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="282.0">
             <children>

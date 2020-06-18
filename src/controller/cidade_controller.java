@@ -1,7 +1,7 @@
 package controller;
 
-import dao.cidadeDao;
 import dao.combo_box_generic;
+import dao.crud_dao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,7 +22,7 @@ import util.Uf;
 public class cidade_controller  implements Initializable, Cadastro {
 
     Uf comboUf = new Uf();
-    private cidadeDao dao = new cidadeDao();
+    private crud_dao<cidade> cidadecrud_dao = new crud_dao<>();
     private ObservableList<cidade> cidadeObservableList = FXCollections.observableArrayList();
     private List<cidade> cidadeList;
     cidade model = new cidade();
@@ -77,22 +77,26 @@ public class cidade_controller  implements Initializable, Cadastro {
 
     @FXML
     void method_remove(ActionEvent event) {
-
+            if (Alerta.msgExclusao(txf_user.getText())){
+                cidadecrud_dao.excluir(model);
+            }
+            limpar_campos_formularios();
+            atualizar_tabela();
     }
 
     @FXML
     void method_save(ActionEvent event) {
         cidade cidadeModel = new cidade();
 
-       if ( cidadeModel.getId() != null) {
-           cidadeModel.setId(cidadeModel.getId());
+       if ( model != null) {
+           cidadeModel.setId(model.getId());
        }
 
         cidadeModel.setDescricao(txf_user.getText());
         cidadeModel.setCep(Long.valueOf(txf_cep.getText()));
         cidadeModel.setUf(combobox_uf.getValue());
 
-        if (dao.salvar(cidadeModel)) {
+        if (cidadecrud_dao.salvar(cidadeModel)) {
             Alerta.msgInfo("Cidade inserida com sucesso!");
         }else {
             Alerta.msgInfo("Cidade nao inserida!");
@@ -103,14 +107,16 @@ public class cidade_controller  implements Initializable, Cadastro {
 
     @Override
     public void criar_colunas_tabela() {
+        TableColumn<cidade, Long> idColumn = new TableColumn<>("ID CIDADE");
         TableColumn<cidade, String> descricao = new TableColumn<>("DESCRIÇÃO");
         TableColumn<cidade, Long> cep = new TableColumn<>("CEP");
         TableColumn<cidade, String> uf = new TableColumn<>("UF");
 
         tableview.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        tableview.getColumns().addAll(descricao, cep, uf);
+        tableview.getColumns().addAll(idColumn, descricao, cep, uf);
 
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         descricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
         cep.setCellValueFactory(new PropertyValueFactory<>("cep"));
         uf.setCellValueFactory(new PropertyValueFactory<>("uf"));
@@ -120,7 +126,7 @@ public class cidade_controller  implements Initializable, Cadastro {
     @Override
     public void atualizar_tabela() {
         cidadeObservableList.clear();
-        cidadeList = dao.consultar(txtf_pesquisar.getText());
+        cidadeList = cidadecrud_dao.consulta(txtf_pesquisar.getText(), "cidade");
         cidadeObservableList.addAll(cidadeList);
 
         tableview.getItems().setAll(cidadeObservableList);
@@ -135,9 +141,11 @@ public class cidade_controller  implements Initializable, Cadastro {
     @Override
     public void set_campos_formularios() {
         model = tableview.getItems().get(tableview.getSelectionModel().getSelectedIndex());
+        txtf_id.setText(String.valueOf(model.getId()));
         txf_user.setText(model.getDescricao());
         txf_cep.setText(String.valueOf(model.getCep()));
         combobox_uf.setValue(model.getUf());
+        txtf_id.setEditable(false);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package controller;
 
-import dao.tipo_contato_dao;
+import dao.crud_dao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 public class tipoContatoController implements Initializable, Cadastro {
 
 
-    private tipo_contato_dao tipoContatoDao = new tipo_contato_dao();
+    private crud_dao<tipoContato> daoCrud = new crud_dao();
     private ObservableList<tipoContato> observableList = FXCollections.observableArrayList();
     private List<tipoContato> listaTipos;
     private tipoContato objetoSelecionado = new tipoContato();
@@ -66,7 +66,7 @@ public class tipoContatoController implements Initializable, Cadastro {
     @FXML
     void method_remove(ActionEvent event) {
         if (Alerta.msgExclusao(txf_descricao.getText())) {
-            tipoContatoDao.excluir(objetoSelecionado);
+            daoCrud.excluir(objetoSelecionado);
             limpar_campos_formularios();
             atualizar_tabela();
         }
@@ -87,7 +87,7 @@ public class tipoContatoController implements Initializable, Cadastro {
         }
         tipoContatoModel.setDescricao(txf_descricao.getText());
 
-            if (tipoContatoDao.salvar(tipoContatoModel)){
+            if (daoCrud.salvar(tipoContatoModel)){
                 Alerta.msgInfo("Registro Inserido com sucesso");
             }else {
                 Alerta.msgInfo("Erro ao inserir registro");
@@ -117,7 +117,7 @@ public class tipoContatoController implements Initializable, Cadastro {
     @Override
     public void atualizar_tabela() {
         observableList.clear();
-        listaTipos = tipoContatoDao.consulta(txtf_pesquisar.getText());
+        listaTipos = daoCrud.consulta(txtf_pesquisar.getText(), "tipoContato");
         observableList.addAll(listaTipos);
         tableview.getItems().setAll(observableList);
         tableview.getSelectionModel().selectFirst();

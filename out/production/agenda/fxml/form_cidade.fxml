@@ -26,7 +26,7 @@
         </HBox>
         <AnchorPane layoutX="7.0" layoutY="59.0" prefHeight="143.0" prefWidth="600.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
             <children>
-                <TextField fx:id="txtf_id" disable="true" editable="false" layoutX="39.0" layoutY="35.0" promptText="ID" />
+                <TextField fx:id="txtf_id" disable="false" layoutX="39.0" layoutY="35.0" promptText="ID" />
                 <TextField fx:id="txf_user" layoutX="39.0" layoutY="74.0" promptText="DESCRIÇÃO" AnchorPane.leftAnchor="39.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="74.0" />
             <PasswordField fx:id="txf_cep" layoutX="220.0" layoutY="108.0" prefHeight="25.0" prefWidth="541.0" promptText="CEP" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="219.0" />
             <ComboBox fx:id="combobox_uf" layoutX="39.0" layoutY="108.0" prefWidth="150.0" promptText="UF" />
