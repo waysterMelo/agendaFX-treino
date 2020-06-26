@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
-    <data-source name="resources:hibernate.cfg.xml/Hibernate" uuid="c6860fb1-4a0d-4941-8d8b-9e1281436df2">
+    <data-source name="hibernate.cfg.xml/Hibernate" uuid="27593127-7b07-4085-afa0-27889ced450b">
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" exact-version="0" />
       <user-name>root</user-name>
       <schema-mapping />

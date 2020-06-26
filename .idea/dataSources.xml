@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="resources:hibernate.cfg.xml/Hibernate" uuid="c6860fb1-4a0d-4941-8d8b-9e1281436df2">
-      <driver-ref>mysql</driver-ref>
+    <data-source source="LOCAL" name="hibernate.cfg.xml/Hibernate" uuid="27593127-7b07-4085-afa0-27889ced450b">
+      <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>
       <remarks>Hibernate
 
-C:/Users/Wayster/Desktop/agenda/resources/hibernate.cfg.xml</remarks>
-      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/agendafx?zeroDateTimeBehavior=convertTonull</jdbc-url>
+C:/Users/Wayster/Desktop/agenda/src/hibernate.cfg.xml</remarks>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/agendafx?useTimezone=true&amp;serverTimezone=UTC</jdbc-url>
+      <driver-properties>
+        <property name="serverTimezone" />
+      </driver-properties>
     </data-source>
   </component>
 </project>

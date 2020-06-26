@@ -1,5 +1,6 @@
 package model;
 
+import javafx.scene.control.CheckBox;
 import net.bytebuddy.asm.Advice;
 
 import javax.persistence.*;
@@ -42,6 +43,28 @@ public class contato implements Serializable {
 
         @OneToOne
         tipoContato idTipoContato;
+
+        @Column(name = "ativo")
+        private boolean ativo;
+
+        @Column(name = "sexo", length = 1)
+        private String sexo;
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
 
     public long getId() {
         return id;

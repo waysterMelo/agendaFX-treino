@@ -159,4 +159,10 @@ public class cidade_controller  implements Initializable, Cadastro {
         atualizar_tabela();
     }
 
+
+    @FXML
+    void movert_tabela(KeyEvent event) {
+        set_campos_formularios();
+    }
+
 }

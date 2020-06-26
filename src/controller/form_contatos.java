@@ -3,14 +3,21 @@ package controller;
 
 import dao.combo_box_generic;
 import dao.crud_dao;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import model.cidade;
 import model.contato;
 import model.tipoContato;
@@ -20,18 +27,27 @@ import util.Uf;
 
 public class form_contatos implements Initializable, Cadastro {
 
-    private final combo_box_generic<tipoContato> daoCombo = new combo_box_generic();
-    private combo_box_generic<cidade> cidadeDao = new combo_box_generic();
+    private final combo_box_generic<tipoContato> tipoContatocombo_box_generic = new combo_box_generic();
+    private combo_box_generic<cidade> cidadecombo_box_generic = new combo_box_generic();
     private crud_dao<contato> contatocrud_dao = new crud_dao<>();
     private contato modelContato = new contato();
+    private ObservableList<contato> observableList = FXCollections.observableArrayList();
+    private List<contato> list;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        titulo.setText("Formulário Contato");
-        combo_uf.setItems(Uf.gerarUf());
-        combo_tipoContato.setItems(daoCombo.combobox("tipoContato"));
-        combo_city.setItems(cidadeDao.combobox("cidade"));
-    }
+    @FXML
+    private TextField field_email;
+
+    @FXML
+    private RadioButton radio_female;
+
+    @FXML
+    private ToggleGroup sexo;
+
+    @FXML
+    private RadioButton masc_female;
+
+    @FXML
+    private CheckBox checkbox_ativo;
 
     @FXML
     private Label titulo;
@@ -55,7 +71,7 @@ public class form_contatos implements Initializable, Cadastro {
     private ComboBox<cidade> combo_city;
 
     @FXML
-    private ComboBox<String> combo_uf;
+    private TextField field_uf;
 
     @FXML
     private TextField field_cep;
@@ -82,7 +98,27 @@ public class form_contatos implements Initializable, Cadastro {
     private TextField txtf_pesquisar;
 
     @FXML
-    private TableView<?> tableview;
+    private TableView<contato> tableview;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        titulo.setText("Formulário Contato");
+        combo_tipoContato.setItems(tipoContatocombo_box_generic.combobox("tipoContato"));
+        combo_city.setItems(cidadecombo_box_generic.combobox("cidade"));
+        criar_colunas_tabela();
+        atualizar_tabela();
+        set_campos_formularios();
+        combo_city.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                field_uf.setText(combo_city.getSelectionModel().getSelectedItem().getUf());
+                field_cep.setText(String.valueOf(combo_city.getSelectionModel().getSelectedItem().getCep()));
+                field_uf.setEditable(false);
+                field_cep.setEditable(false);
+            }
+        });
+
+    }
 
     @FXML
     void method_new(ActionEvent event) {
@@ -96,44 +132,108 @@ public class form_contatos implements Initializable, Cadastro {
 
     @FXML
     void method_save(ActionEvent event) {
-    //    modelContato.setId(txtf_id.getId());
-    cidade modelCidade = new cidade();
-    modelContato.setDescricao(field_nome.getText());
-    modelContato.setIdCidade(combo_city.getValue());
-    modelContato.setEndereco(field_address.getText());
-    modelContato.setIdTipoContato(combo_tipoContato.getValue());
-    modelContato.setNascimento(LocalDate.EPOCH);
-    modelContato.setTel1(Long.valueOf(field_tel1.getText()));
-    modelContato.setTel2(Long.valueOf(field_tel2.getText()));
-    modelContato.setNumero(Integer.valueOf(field_n.getText()));
+    contato contato = new contato();
 
-    if (contatocrud_dao.salvar(modelContato)){
+    if (modelContato != null){
+        contato.setId(modelContato.getId());
+    }
+
+    contato.setDescricao(field_nome.getText());
+        contato.setIdCidade(combo_city.getSelectionModel().getSelectedItem());
+        contato.setEndereco(field_address.getText());
+        contato.setIdTipoContato(combo_tipoContato.getSelectionModel().getSelectedItem());
+        LocalDate data = field_born.getValue();
+        contato.setNascimento(data);
+        contato.setTel1(Long.valueOf(field_tel1.getText()));
+        contato.setTel2(Long.valueOf(field_tel2.getText()));
+        contato.setNumero(Integer.parseInt(field_n.getText()));
+        contato.setEmail(field_email.getText());
+
+        if (checkbox_ativo.isSelected()){
+                contato.setAtivo(true);
+        }else {
+            contato.setAtivo(false);
+        }
+
+        if (masc_female.isSelected()){
+            contato.setSexo("M");
+        }else {
+            contato.setSexo("F");
+        }
+
+    if (contatocrud_dao.salvar(contato)){
         Alerta.msgInfo("Contato Inserido com sucesso");
+        atualizar_tabela();
     }else {
         Alerta.msgInfo("Contato não inserido!");
     }
-
     }
-
-    @FXML
-    void pesquisar(ActionEvent event) {
-
-    }
-
 
     @Override
     public void criar_colunas_tabela() {
+        TableColumn<contato, String> nomeColumn = new TableColumn<>("Nome");
+        TableColumn<contato, String> emailColumn = new TableColumn<>("Email");
+        TableColumn<contato, cidade> cidadeColumn = new TableColumn<>("Cidade");
+        TableColumn<contato, String> telColumn = new TableColumn<>("Celular");
+
+        tableview.getColumns().addAll(nomeColumn, emailColumn,cidadeColumn,telColumn);
+        nomeColumn.setCellValueFactory(new PropertyValueFactory<>("descricao"));
+        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+        cidadeColumn.setCellValueFactory(new PropertyValueFactory<>("idCidade"));
+        telColumn.setCellValueFactory(new PropertyValueFactory<>("tel1"));
+
+        tableview.setColumnResizePolicy(tableview.CONSTRAINED_RESIZE_POLICY);
 
     }
 
     @Override
     public void atualizar_tabela() {
+        observableList.clear();
 
+        list = contatocrud_dao.consulta(field_nome.getText(), "contato");
+
+        observableList.addAll(list);
+
+        tableview.getItems().setAll(observableList);
+        tableview.getSelectionModel().selectFirst();
     }
 
     @Override
     public void set_campos_formularios() {
+        if (!tableview.getItems().isEmpty()){
+            modelContato = tableview.getItems().get(tableview.getSelectionModel().getSelectedIndex());
+            txtf_id.setText(String.valueOf(modelContato.getId()));
+            field_nome.setText(modelContato.getDescricao());
+            field_n.setText(String.valueOf(modelContato.getNumero()));
+            field_tel1.setText(String.valueOf(modelContato.getTel1()));
+            field_tel2.setText(String.valueOf(modelContato.getTel2()));
+            field_address.setText(modelContato.getEndereco());
+            field_email.setText(modelContato.getEmail());
 
+            checkbox_ativo.setSelected(modelContato.isAtivo());
+
+            if (modelContato.getSexo().equals("M")){
+                masc_female.setSelected(true);
+            }else{
+                radio_female.setSelected(true);
+            }
+
+            field_born.setValue(modelContato.getNascimento());
+
+//            tipoContato tipoContatoModel = new tipoContato();
+//            tipoContatoModel.setId(modelContato.getIdTipoContato().getId());
+//            tipoContatoModel.setDescricao(modelContato.getIdTipoContato().getDescricao());
+//            combo_tipoContato.getSelectionModel().selectFirst();
+//            combo_tipoContato.setValue(tipoContatoModel);
+
+            cidade cidademodel = new cidade();
+            cidademodel.setId(modelContato.getIdCidade().getId());
+            cidademodel.setDescricao(modelContato.getIdCidade().getDescricao());
+            cidademodel.setUf(modelContato.getIdCidade().getUf());
+            cidademodel.setCep(modelContato.getIdCidade().getCep());
+            combo_city.getSelectionModel().selectFirst();
+            combo_city.setValue(cidademodel);
+        }
     }
 
     @Override
@@ -158,4 +258,15 @@ public class form_contatos implements Initializable, Cadastro {
         field_tel2.clear();
         field_tel2.setEditable(true);
     }
+
+    @FXML
+    void clicartabela(MouseEvent event) {
+        set_campos_formularios();
+    }
+
+    @FXML
+    void filtrarTabela(KeyEvent event) {
+    atualizar_tabela();
+    }
+
 }
